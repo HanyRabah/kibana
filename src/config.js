@@ -30,7 +30,7 @@ function (Settings) {
      *
      */
     elasticsearch: "http://"+window.location.host+"/es/",
-
+    elasticsearch_download_url: "http://192.168.10.24:8000/download",
     /** @scratch /configuration/config.js/5
      *
      * ==== default_route

@@ -11,6 +11,7 @@ function (_) {
      */
     var defaults = {
       elasticsearch     : "http://"+window.location.hostname+":9200",
+      elasticsearch_download_url: '',
       panel_names       : [],
       kibana_index      : 'kibana-int',
       default_route     : '/dashboard/file/default.json'

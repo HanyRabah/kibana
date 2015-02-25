@@ -110,9 +110,9 @@
         <div class="span1" style="text-align:left">
           <i ng-click="panel.offset = (panel.offset + panel.size)" ng-show="data.length > panel.offset+panel.size" class='icon-arrow-right pointer'></i>
         </div>
-         <div class="span1 pointer" style="text-align:right; float:right; color:#77b300">
+         <div ng-click="export()"  class="span1 pointer" style="text-align:right; float:right; color:#77b300">
          download csv
-          <i ng-click="panel.offset = (panel.offset + panel.size)" ng-show="data.length > panel.offset+panel.size" class='icon-file-text-alt'></i>
+          <i class='icon-file-text-alt'></i>
         </div>
       </div>
       <table class="table-hover table table-condensed" ng-style="panel.style">

@@ -18,8 +18,9 @@ define([
   'lodash',
   'kbn',
   'moment',
+  'config'
 ],
-function (angular, app, _, kbn, moment) {
+function (angular, app, _, kbn, moment, config) {
   'use strict';
 
   var module = angular.module('kibana.panels.table', []);
@@ -196,7 +197,32 @@ function (angular, app, _, kbn, moment) {
 
     };
 
+    $scope.export = function() {
+      var queries = querySrv.getQueryObjs($scope.panel.queries.ids);
 
+      var boolQuery = $scope.ejs.BoolQuery();
+      _.each(queries,function(q) {
+        boolQuery = boolQuery.should(querySrv.toEjsObj(q));
+      });
+
+      var sort = [$scope.ejs.Sort($scope.panel.sort[0]).order($scope.panel.sort[1])];
+      if($scope.panel.localTime) {
+        sort.push($scope.ejs.Sort($scope.panel.timeField).order($scope.panel.sort[1]));
+      }
+
+      var query = $scope.ejs.FilteredQuery(
+          boolQuery,
+          filterSrv.getBoolFilter(filterSrv.ids())
+        );
+
+      var qstr = '{"query": ' + query.toString() + ', "sort": [' + sort.toString() + '], "fields": ' + JSON.stringify($scope.panel.fields) + '}';
+
+      $('<form>', {method: 'post',
+                   action: config.elasticsearch_download_url,
+                   enctype: 'application/json'})
+        .append($('<input>', {type: 'hidden', name: 'q'}).val(qstr))
+        .submit();
+    };
 
     $scope.toggle_micropanel = function(field,groups) {
       var docs = _.map($scope.data,function(_d){return _d.kibana._source;});
