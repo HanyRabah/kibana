@@ -55,10 +55,6 @@ define(function (require) {
           $scope.limit += 50;
         };
 
-        $scope.export = function() {
-              debugger;
-        };
-
         $scope.$watch('searchSource', prereq(function (searchSource) {
           if (!$scope.searchSource) return;
 
